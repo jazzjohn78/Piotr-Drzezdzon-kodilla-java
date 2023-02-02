@@ -16,14 +16,14 @@ public class TestingMain {
 
         //test klasy Calculator
         Calculator calculator = new Calculator();
-        double addResult = calculator.add(2.5, 49.1);
-        if(addResult == 51.6){
+        int addResult = calculator.add(2, 49);
+        if(addResult == 51){
             System.out.println("test OK");
         } else {
             System.out.println("Error!");
         }
-        double subtractResult = calculator.subtract(142.12, 34.53);
-        if(subtractResult == 107.59){
+        int subtractResult = calculator.subtract(142, 34);
+        if(subtractResult == 108){
             System.out.println("test OK");
         } else {
             System.out.println("Error!");

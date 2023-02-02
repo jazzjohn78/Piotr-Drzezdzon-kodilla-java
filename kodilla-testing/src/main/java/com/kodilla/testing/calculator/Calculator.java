@@ -1,11 +1,11 @@
 package com.kodilla.testing.calculator;
 
 public class Calculator {
-    public double add(double a, double b){
+    public int add(int a, int b){
         return a + b;
     }
 
-    public double subtract(double a, double b){
+    public int subtract(int a, int b){
         return a - b;
     }
 
