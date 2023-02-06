@@ -1,6 +1,7 @@
 package com.kodilla.stream;
 
 
+import com.kodilla.stream.beautifier.PoemBeautifier;
 import com.kodilla.stream.forumuser.Forum;
 import com.kodilla.stream.forumuser.ForumUser;
 
@@ -12,6 +13,14 @@ import java.util.stream.Collectors;
 public class StreamMain {
 
     public static void main(String[] args) {
+        //beautifier
+        PoemBeautifier poemBeautifier = new PoemBeautifier();
+        poemBeautifier.beautify("This is a sample text.", t -> "<<<" + t + ">>>");
+        poemBeautifier.beautify("This is a sample text.", t -> t.toUpperCase());
+        poemBeautifier.beautify("This is a sample text.", t -> t.replace("s", "z"));
+        poemBeautifier.beautify("    This is a sample text.   ", t -> t.trim());
+
+        //forum
         Forum theForum = new Forum();
 
         Map<Integer, ForumUser> resultMap = theForum.getUserList().stream()
