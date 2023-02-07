@@ -103,8 +103,17 @@ public class BoardTestSuite {
                 .reduce(0L, (sum, current) -> sum += current);
         double averageProgress = sumProgress / countProgress;
 
+        double directAverageProgress = project.getTaskLists().stream()
+                .filter(inProgressTasks::contains)
+                .flatMap(list -> list.getTasks().stream())
+                .map(task -> LocalDate.now().toEpochDay() - task.getCreated().toEpochDay())
+                .mapToLong(days -> days)
+                .average()
+                .getAsDouble();
+
         //Then
         assertEquals(10.0, averageProgress);
+        assertEquals(10.0, directAverageProgress);
     }
 
     private Board prepareTestData() {
