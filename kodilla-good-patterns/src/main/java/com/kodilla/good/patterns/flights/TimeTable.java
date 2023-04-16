@@ -55,4 +55,18 @@ public final class TimeTable {
                 .forEach(System.out::println);
 
     }
+
+    public void getFlightsFromViaTo(String departure, String via, String destination) {
+        String layover = flightSet.stream()
+                .filter(f -> f.getDeparture().equals(departure))
+                .filter(f -> f.getDestination().equals(via))
+                .map(f -> f.getDestination())
+                .collect(Collectors.joining(""));
+
+        flightSet.stream()
+                .filter(f -> f.getDeparture().equals(layover))
+                .filter(f -> f.getDestination().equals(destination))
+                .map(f -> departure + " -> " + f.getDeparture() + " -> " + f.getDestination())
+                .forEach(System.out::println);
+    }
 }
