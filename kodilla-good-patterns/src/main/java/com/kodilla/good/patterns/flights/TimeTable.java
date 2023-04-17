@@ -21,27 +21,25 @@ public final class TimeTable {
         flightSet.add(new Flight("Wrocław", "Gdańsk"));
     }
 
-    public void getFlightsFrom(String departure) {
-        flightSet.stream()
+    public Set<Flight> getFlightsFrom(String departure) {
+        return flightSet.stream()
                 .filter(f -> f.getDeparture().equals(departure))
-                .map(f -> f.getDeparture() + " -> " + f.getDestination())
-                .forEach(System.out::println);
+                .collect(Collectors.toSet());
     }
 
-    public void getFlightsTo(String destination) {
-        flightSet.stream()
+    public Set<Flight> getFlightsTo(String destination) {
+        return flightSet.stream()
                 .filter(f -> f.getDestination().equals(destination))
-                .map(f -> f.getDeparture() + " -> " + f.getDestination())
-                .forEach(System.out::println);
+                .collect(Collectors.toSet());
     }
 
-    public void getFlightsFromTo(String departure, String destination) {
+    public Set<String> getFlightsFromTo(String departure, String destination) {
         //direct flights
-        flightSet.stream()
+        Set resultSet =  flightSet.stream()
                 .filter(f -> f.getDeparture().equals(departure))
                 .filter(f -> f.getDestination().equals(destination))
                 .map(f -> f.getDeparture() + " -> " + f.getDestination())
-                .forEach(System.out::println);
+                .collect(Collectors.toSet());
         //indirect flights
         Set possibleLayoversSet = flightSet.stream()
                 .filter(f -> f.getDeparture().equals(departure))
@@ -52,21 +50,22 @@ public final class TimeTable {
                 .filter(f -> possibleLayoversSet.contains(f.getDeparture()))
                 .filter(f -> f.getDestination().equals(destination))
                 .map(f -> departure + " -> " + f.getDeparture() + " -> " + f.getDestination())
-                .forEach(System.out::println);
+                .forEach(resultSet::add);
 
+        return resultSet;
     }
 
-    public void getFlightsFromViaTo(String departure, String via, String destination) {
+    public Set<String> getFlightsFromViaTo(String departure, String via, String destination) {
         String layover = flightSet.stream()
                 .filter(f -> f.getDeparture().equals(departure))
                 .filter(f -> f.getDestination().equals(via))
                 .map(f -> f.getDestination())
                 .collect(Collectors.joining(""));
 
-        flightSet.stream()
+        return flightSet.stream()
                 .filter(f -> f.getDeparture().equals(layover))
                 .filter(f -> f.getDestination().equals(destination))
                 .map(f -> departure + " -> " + f.getDeparture() + " -> " + f.getDestination())
-                .forEach(System.out::println);
+                .collect(Collectors.toSet());
     }
 }
