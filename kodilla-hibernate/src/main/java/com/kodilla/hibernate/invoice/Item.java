@@ -53,7 +53,7 @@ public class Item {
         return value;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="PRODUCT_ID")
     public Product getProduct() {
         return product;
