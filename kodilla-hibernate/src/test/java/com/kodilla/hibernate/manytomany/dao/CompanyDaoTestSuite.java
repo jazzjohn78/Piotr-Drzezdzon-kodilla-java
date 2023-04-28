@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest
@@ -13,6 +16,8 @@ class CompanyDaoTestSuite {
 
     @Autowired
     private CompanyDao companyDao;
+    @Autowired
+    private EmployeeDao employeeDao;
 
     @Test
     void testSaveManyToMany() {
@@ -58,6 +63,67 @@ class CompanyDaoTestSuite {
         } catch (Exception e) {
             //do nothing
         }
+    }
 
+    @Test
+    void testEmployeeDaoNamedQuery() {
+        //given
+        Employee john = new Employee("John", "Jazz");
+        Employee susan = new Employee("Susan", "Novak");
+        Employee mark = new Employee("Mark", "Jazz");
+
+        Company company = new Company("At Least Show Up");
+
+        company.getEmployees().add(john);
+        company.getEmployees().add(susan);
+        company.getEmployees().add(mark);
+
+        john.getCompanies().add(company);
+        susan.getCompanies().add(company);
+        mark.getCompanies().add(company);
+
+        companyDao.save(company);
+        int id = company.getId();
+
+        //when
+        List<Employee> jazzNamed = employeeDao.retrieveEmployeesWithNameEqualTo("Jazz");
+
+        //then
+        try {
+            assertEquals(2, jazzNamed.size());
+        } finally {
+            //cleanUp
+            companyDao.deleteById(id);
+        }
+
+    }
+
+    @Test
+    void testCompanyDaoNamedNativeQuery() {
+        //given
+        Company company1 = new Company("Data Processors");
+        Company company2 = new Company("Work Sceptics");
+        Company company3 = new Company("Worship Beginners");
+
+        companyDao.save(company1);
+        companyDao.save(company2);
+        companyDao.save(company3);
+
+        int id1 = company1.getId();
+        int id2 = company2.getId();
+        int id3 = company3.getId();
+
+        //when
+        List<Company> resultCompanies = companyDao.retrieveCompaniesWithNameStartingWith("Wor");
+
+        //then
+        try {
+            assertEquals(2, resultCompanies.size());
+        } finally {
+            //cleanUp
+            companyDao.deleteById(id1);
+            companyDao.deleteById(id2);
+            companyDao.deleteById(id3);
+        }
     }
 }
