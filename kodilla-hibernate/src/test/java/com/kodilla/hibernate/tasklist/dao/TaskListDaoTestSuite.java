@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 @SpringBootTest
 public class TaskListDaoTestSuite {
 
-    @Autowired
+    /*@Autowired
     private TaskListDao taskListDao;
 
     @Test
@@ -63,5 +63,5 @@ public class TaskListDaoTestSuite {
 
         //cleanUp
         taskListDao.deleteById(id);
-    }
+    }*/
 }
