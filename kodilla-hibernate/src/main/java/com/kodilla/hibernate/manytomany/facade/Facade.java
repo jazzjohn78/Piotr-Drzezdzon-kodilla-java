@@ -14,7 +14,6 @@ public class Facade {
     private final CompanyDao companyDao;
     private final EmployeeDao employeeDao;
 
-    @Autowired
     public Facade(CompanyDao companyDao, EmployeeDao employeeDao) {
         this.companyDao = companyDao;
         this.employeeDao = employeeDao;
