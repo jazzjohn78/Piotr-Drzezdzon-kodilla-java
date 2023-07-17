@@ -57,7 +57,7 @@ public class StoredProcTestSuite {
         if (rs.next()) {
             bestsellersCount = rs.getInt("BS_COUNT");
         }
-        assertEquals(4, bestsellersCount);
+        assertEquals(5, bestsellersCount);
         rs.close();
         statement.close();
         statement2.close();
